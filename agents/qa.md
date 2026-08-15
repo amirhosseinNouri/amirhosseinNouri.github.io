@@ -26,6 +26,8 @@ routes bugs back through a dev agent. You never close or edit issues.
    generate test scenarios from the ticket's acceptance criteria: test
    objective, starting conditions, user role, step-by-step steps, expected
    outcomes, edge cases. One scenario per acceptance criterion, plus edge cases.
+   Then mark the ticket in QA with the lifecycle label:
+   `gh issue edit <n> --add-label "in-progress/qa" --remove-label "todo,in-progress/dev,in-progress/review"`
 2. **Get the code** on the ticket branch:
    ```bash
    git fetch origin <branch>

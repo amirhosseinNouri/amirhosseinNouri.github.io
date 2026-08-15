@@ -23,6 +23,8 @@ merge, or close issues. You deliver a branch + PR with green gates.
 
 1. **Fetch the ticket**:
    `gh api repos/amirhosseinNouri/amirhosseinNouri.github.io/issues/<n>`
+   Then mark it in progress with the lifecycle label:
+   `gh issue edit <n> --add-label "in-progress/dev" --remove-label "todo,in-progress/review,in-progress/qa"`
 2. **Sync and branch**: pull latest `main`, then
    `git checkout -b feat/<n>-<slug>`. Never branch from another feature branch.
 3. **Implement** following `plan.md`, `AGENTS.md`, and existing repo

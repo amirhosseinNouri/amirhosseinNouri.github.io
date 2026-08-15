@@ -26,6 +26,8 @@ the PR and the ticket becomes ready for QA. You never modify code.
 
 1. **Fetch the PR scope**:
    `gh pr view <n> --json title,headRefName,baseRefName,body,additions,deletions,files`
+   Then mark the ticket in review with the lifecycle label:
+   `gh issue edit <n> --add-label "in-progress/review" --remove-label "todo,in-progress/dev,in-progress/qa"`
 2. **Write the review background** to a temp file (acceptance criteria +
    relevant plan phase) and **run ocr** on the branch vs its base:
    ```bash

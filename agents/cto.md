@@ -36,6 +36,38 @@ finished, verified project plus a final report.
 - Gates that must pass before a ticket is done:
   `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm generate` (AGENTS.md).
 
+## Ticket lifecycle / status labels
+
+Every ticket carries a single status label that is always visible on the issue.
+A ticket is never in two states at once.
+
+| Label                 | Meaning                                              |
+|-----------------------|------------------------------------------------------|
+| `todo`                | created / unstarted (default)                        |
+| `in-progress/dev`     | a dev agent is implementing or fixing the ticket     |
+| `in-progress/review`  | the code review agent is reviewing the PR            |
+| `in-progress/qa`      | the QA agent is validating the ticket                |
+| `done`                | closed, merged, gates green                          |
+
+Create the labels once (they are repo-level, shared by every ticket):
+
+```bash
+gh label create todo --color "ededed" --force
+gh label create in-progress/dev --color "d4c5f9" --force
+gh label create in-progress/review --color "1d76db" --force
+gh label create in-progress/qa --color "bfd4f2" --force
+gh label create done --color "0e8a16" --force
+```
+
+**Label ownership:** each agent sets the label of the phase it is starting (see
+the agent files); the CTO owns every transition between phases and sets `done`
+when closing. Swap the label with one call:
+
+```bash
+gh issue edit <n> --add-label "in-progress/dev" \
+  --remove-label "todo,in-progress/review,in-progress/qa"
+```
+
 ## Spawning subagents
 
 Spawn subagents with the Task tool. The role agents are defined in this
@@ -63,25 +95,35 @@ Every spawn prompt MUST include:
 
 ## Per-ticket pipeline
 
+Each ticket moves through the lifecycle labels; the current phase is always
+visible on the issue: `todo` → `in-progress/dev` → `in-progress/review` →
+`in-progress/qa` → `done`.
+
 1. **Select** the next unblocked open issue, in plan order (#1 → #51),
-   dependencies satisfied.
-2. **Dev**: spawn `dev`. Wait for its report (implementation summary, gate
-   results, PR URL). If gates failed or the work is incomplete, re-spawn `dev`
-   to finish before review.
-3. **Review**: spawn `review` on the PR/branch. Wait for findings.
-   - Valid findings reported → spawn `dev` to fix them (same ticket), then
-     re-run review. Loop until review reports clean.
+   dependencies satisfied. Keep its label at `todo` until work starts.
+2. **Dev**: set `in-progress/dev`, then spawn `dev`. Wait for its report
+   (implementation summary, gate results, PR URL). If gates failed or the work
+   is incomplete, re-spawn `dev` (label stays `in-progress/dev`).
+3. **Review**: set `in-progress/review`, then spawn `review` on the PR/branch.
+   Wait for findings.
+   - Valid findings reported → set `in-progress/dev`, spawn `dev` to fix them
+     (same ticket), then set `in-progress/review` and re-run review. Loop until
+     review reports clean.
    - Review approves → the ticket is **ready for QA**. Record the approval on
      the ticket.
-4. **QA**: spawn `qa` on the ticket + PR.
-   - Bugs reported → for each bug create a **Bug issue** (see below), spawn
-     `dev` to fix it, then spawn `qa` to re-validate the fix. Loop until QA
-     passes.
+4. **QA**: set `in-progress/qa`, then spawn `qa` on the ticket + PR.
+   - Bugs reported → for each bug create a **Bug issue** (see below), set
+     `in-progress/dev`, spawn `dev` to fix it, then set `in-progress/qa` and
+     spawn `qa` to re-validate the fix. Loop until QA passes.
    - QA passes → close the ticket.
-5. **Close the ticket**:
-   `gh api repos/amirhosseinNouri/amirhosseinNouri.github.io/issues/<n> -X PATCH -f state=closed`
-   and add a closing comment summarizing what shipped, the PR link, review
-   result, QA result, and gate status. Move to the next ticket.
+5. **Close the ticket**: set `done` and close in two calls, then comment:
+   ```bash
+   gh issue edit <n> --add-label "done" \
+     --remove-label "todo,in-progress/dev,in-progress/review,in-progress/qa"
+   gh api repos/amirhosseinNouri/amirhosseinNouri.github.io/issues/<n> -X PATCH -f state=closed
+   ```
+   Add a closing comment summarizing what shipped, the PR link, review result,
+   QA result, and gate status. Move to the next ticket.
 
 ## Creating bug issues (QA found a bug)
 
@@ -111,8 +153,10 @@ Every spawn prompt MUST include:
 2. Link both ways: reference `#<bug>` on the parent ticket and `Related to
    #<parent>` on the bug. Use the github-issues `dependencies.md` reference for
    blocked-by relationships where the org supports them.
-3. Hand the bug to a `dev` agent; once fixed and QA re-validated, close the bug
-   issue and comment the result on the parent ticket.
+3. Bug issues follow the same lifecycle: `todo` → `in-progress/dev` →
+   `in-progress/review` → `in-progress/qa` → `done`. Hand the bug to a `dev`
+   agent, re-validate with `qa`, then set `done` and close the bug issue;
+   comment the result on the parent ticket.
 
 ## Progress reporting
 
