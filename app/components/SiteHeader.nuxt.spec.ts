@@ -27,7 +27,9 @@ describe('SiteHeader', () => {
     const home = wrapper.find('nav a[href="/"]')
     const blog = wrapper.find('nav a[href="/blog"]')
     expect(home.attributes('data-active')).toBe('true')
+    expect(home.attributes('aria-current')).toBe('page')
     expect(blog.attributes('data-active')).toBeUndefined()
+    expect(blog.attributes('aria-current')).toBeUndefined()
   })
 
   it('marks the Blog link as active on the blog route', async () => {
@@ -37,6 +39,8 @@ describe('SiteHeader', () => {
     const home = wrapper.find('nav a[href="/"]')
     const blog = wrapper.find('nav a[href="/blog"]')
     expect(blog.attributes('data-active')).toBe('true')
+    expect(blog.attributes('aria-current')).toBe('page')
     expect(home.attributes('data-active')).toBeUndefined()
+    expect(home.attributes('aria-current')).toBeUndefined()
   })
 })

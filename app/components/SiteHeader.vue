@@ -7,7 +7,7 @@ const navItems = [
 ]
 
 function isActive(to: string) {
-  return to === '/' ? route.path === '/' : route.path.startsWith(to)
+  return to === '/' ? route.path === '/' : route.path === to || route.path.startsWith(to + '/')
 }
 </script>
 
@@ -39,6 +39,7 @@ function isActive(to: string) {
           :key="item.to"
           :to="item.to"
           :data-active="isActive(item.to) || undefined"
+          :aria-current="isActive(item.to) ? 'page' : undefined"
           class="relative rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors duration-150"
           :class="
             isActive(item.to)
