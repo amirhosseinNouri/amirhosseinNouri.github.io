@@ -22,7 +22,7 @@ function isActive(to: string) {
         aria-label="Amir Nouri — home"
       >
         <span
-          class="grid size-8 place-items-center rounded-lg bg-primary font-display text-sm font-semibold text-primary-foreground transition-transform duration-200 group-hover:-rotate-6"
+          class="grid size-8 place-items-center rounded-lg bg-primary font-display text-sm font-semibold text-inverted transition-transform duration-200 group-hover:-rotate-6"
         >
           AN
         </span>

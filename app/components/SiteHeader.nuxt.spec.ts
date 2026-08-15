@@ -43,4 +43,22 @@ describe('SiteHeader', () => {
     expect(home.attributes('data-active')).toBeUndefined()
     expect(home.attributes('aria-current')).toBeUndefined()
   })
+
+  it('does not mark the Blog link active on a sibling segment', async () => {
+    pathMock.mockReturnValue('/blogging')
+    const wrapper = await mountSuspended(SiteHeader)
+
+    const blog = wrapper.find('nav a[href="/blog"]')
+    expect(blog.attributes('data-active')).toBeUndefined()
+    expect(blog.attributes('aria-current')).toBeUndefined()
+  })
+
+  it('marks the Blog link active on a nested blog route', async () => {
+    pathMock.mockReturnValue('/blog/post')
+    const wrapper = await mountSuspended(SiteHeader)
+
+    const blog = wrapper.find('nav a[href="/blog"]')
+    expect(blog.attributes('data-active')).toBe('true')
+    expect(blog.attributes('aria-current')).toBe('page')
+  })
 })
