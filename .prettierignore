@@ -1,0 +1,12 @@
+# Lockfiles — never reformat
+pnpm-lock.yaml
+pnpm-workspace.yaml
+
+# Auto-generated Nuxt rc file
+.nuxtrc
+
+# Docs & process files owned elsewhere — do not reformat
+AGENTS.md
+plan.md
+agents/
+.agents/
