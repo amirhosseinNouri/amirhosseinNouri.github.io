@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { socials } from '~/data/socials'
+
 useSeoMeta({
   title: 'Senior Software Engineer',
   description:
@@ -12,8 +14,25 @@ useSeoMeta({
   twitterCard: 'summary_large_image'
 })
 
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Amir Nouri',
+  jobTitle: 'Senior Software Engineer',
+  url: 'https://amirhosseinnouri.github.io',
+  sameAs: socials
+    .filter(social => social.href.startsWith('http'))
+    .map(social => social.href),
+}
+
 useHead({
-  link: [{ rel: 'canonical', href: 'https://amirhosseinnouri.github.io' }]
+  link: [{ rel: 'canonical', href: 'https://amirhosseinnouri.github.io' }],
+  script: [
+    {
+      type: 'application/ld+json',
+      textContent: JSON.stringify(personSchema),
+    },
+  ],
 })
 </script>
 
