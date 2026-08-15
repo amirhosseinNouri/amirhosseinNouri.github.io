@@ -11,5 +11,25 @@ export default defineNuxtConfig({
   typescript: {
     strict: true,
     typeCheck: true
+  },
+  app: {
+    head: {
+      htmlAttrs: {
+        lang: 'en'
+      },
+      title: 'Amir Nouri — Senior Software Engineer',
+      titleTemplate: '%s · Amir Nouri',
+      meta: [
+        {
+          name: 'description',
+          content:
+            'Senior Software Engineer at Snapp, building web products for 50M+ users. Open-source projects: Momgen (meeting minutes), Voxgen (text-to-audio).'
+        },
+        { property: 'og:type', content: 'website' },
+        { property: 'og:site_name', content: 'Amir Nouri' },
+        { property: 'og:image', content: 'https://amirhosseinnouri.github.io/og.png' },
+        { name: 'twitter:card', content: 'summary_large_image' }
+      ]
+    }
   }
 })
