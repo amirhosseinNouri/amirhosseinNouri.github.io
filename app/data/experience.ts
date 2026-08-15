@@ -1,6 +1,8 @@
 export interface ExperienceRole {
   title: string
+  /** Start month, format `MM/YYYY` (e.g. `03/2025`). */
   start: string
+  /** End month, format `MM/YYYY`; use `'Present'` when the role is ongoing. */
   end: string
   context?: string
 }

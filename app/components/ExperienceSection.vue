@@ -1,5 +1,10 @@
 <script setup lang="ts">
 import { experiences } from '~/data/experience'
+
+function toDatetime(value: string): string {
+  const [month, year] = value.split('/')
+  return `${year}-${month}`
+}
 </script>
 
 <template>
@@ -40,7 +45,7 @@ import { experiences } from '~/data/experience'
                   <p class="font-medium text-(--ui-text-toned)">{{ role.title }}</p>
                   <time
                     class="text-xs text-(--ui-text-muted)"
-                    :datetime="`${role.start}–${role.end}`"
+                    :datetime="toDatetime(role.start)"
                   >
                     {{ role.start }} – {{ role.end }}
                   </time>
