@@ -3,9 +3,14 @@
     <div
       class="mx-auto flex w-full max-w-(--ui-container) flex-col items-center gap-6 px-4 py-8 sm:px-6 md:flex-row md:justify-between md:py-10"
     >
-      <p class="text-xs text-(--ui-text-muted)">
-        © {{ currentYear }} Amir Nouri
-      </p>
+      <div class="flex flex-col items-center gap-1 text-center md:items-start md:text-left">
+        <p class="text-xs text-(--ui-text-muted)">
+          © {{ currentYear }} Amir Nouri
+        </p>
+        <p class="text-xs text-(--ui-text-muted)">
+          This site uses anonymized analytics to understand how visitors use it.
+        </p>
+      </div>
 
       <ul class="flex items-center gap-1" aria-label="Social links">
         <li v-for="social in socials" :key="social.label">
