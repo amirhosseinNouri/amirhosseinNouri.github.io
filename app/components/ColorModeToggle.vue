@@ -86,6 +86,7 @@ function cycle() {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .theme-toggle,
   .theme-icon-enter-active,
   .theme-icon-leave-active {
     transition: none;

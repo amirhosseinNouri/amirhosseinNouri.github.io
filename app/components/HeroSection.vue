@@ -37,7 +37,9 @@
           style="--hero-delay: 160ms"
         >
           <span aria-hidden="true" class="h-px w-10 bg-primary sm:w-14" />
-          <p class="text-lg font-medium text-primary sm:text-xl lg:text-2xl">
+          <p
+            class="text-lg font-medium text-(--ui-color-primary-700) sm:text-xl lg:text-2xl dark:text-(--ui-color-primary-400)"
+          >
             Senior Software Engineer
           </p>
         </div>
