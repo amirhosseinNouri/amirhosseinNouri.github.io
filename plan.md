@@ -211,7 +211,7 @@ Tasks:
 **Goal:** Push to `main` publishes the site.
 
 Tasks:
-1. Create the GitHub repo named exactly `amirhosseinnouri.github.io` (this exact name is what serves the site at the domain root and removes any need for `app.baseURL`).
+1. **Note:** the GitHub repo already exists as `amirhosseinnouri.github.io` (this exact name is what serves the site at the domain root and removes any need for `app.baseURL`) and is the upstream of this local repo. No creation step is needed.
 2. `.github/workflows/deploy.yml`, triggered on push to `main` and on `workflow_dispatch`:
    - `actions/checkout@v4`
    - `pnpm/action-setup@v4`
@@ -287,6 +287,11 @@ The only asset that must still be produced by hand is the OG image (`public/og.p
 
 ## Notes for issue conversion
 
-Each phase maps to one GitHub issue (or a milestone with the numbered tasks as sub-issues). Dependency order is largely sequential: Phase 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9.
+Each task maps to its own atomic GitHub issue so multiple agents can pick work up in parallel. Phases map to labels and the milestone, not to issues:
+
+- **`infra` label** — Phase 1 (scaffold/tooling), Phase 2 (Nuxt UI setup, theming, dark mode), Phase 8 (CI/CD), and any other setup work.
+- **`feature` label** — pure product work: Phase 3 (data model), Phase 4 (projects section), Phase 5 (hero/about/experience/skills/footer), Phase 6 (layout/nav/blog), Phase 7 (SEO/OG/sitemap/analytics), Phase 9 (polish).
+
+Dependency order is largely sequential: Phase 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9. Where an issue has a prerequisite, that is called out in its description as a blocking dependency.
 
 Parallelism: Phases 5 and 6 can proceed together once Phase 4 lands. Phase 8 (CI/CD) can be drafted early but cannot be verified until Phase 6 exists, since one of its acceptance criteria is that `/blog` resolves on direct navigation.
