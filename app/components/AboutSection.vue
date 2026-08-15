@@ -9,7 +9,7 @@ const copy =
       <div class="max-w-2xl">
         <h2
           id="about-heading"
-          class="text-xs font-semibold uppercase tracking-[0.2em] text-muted"
+          class="text-xs font-semibold uppercase tracking-[0.2em] text-(--ui-text-muted)"
         >
           About
         </h2>
