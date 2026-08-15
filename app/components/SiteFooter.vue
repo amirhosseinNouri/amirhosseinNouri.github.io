@@ -8,7 +8,7 @@
           © {{ currentYear }} Amir Nouri
         </p>
         <p class="text-xs text-(--ui-text-muted)">
-          This site uses anonymous analytics. No personal data is collected.
+          This site uses anonymized analytics to understand how visitors use it.
         </p>
       </div>
 
