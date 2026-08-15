@@ -17,6 +17,8 @@
   },
   "dependencies": {
     "@nuxt/ui": "^4.10.0",
+    "@nuxtjs/robots": "^6.1.4",
+    "@nuxtjs/sitemap": "^8.3.4",
     "nuxt": "^4.5.2",
     "nuxt-gtag": "^5.0.0",
     "tailwindcss": "^4.3.3",
