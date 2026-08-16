@@ -1,7 +1,13 @@
 <template>
   <article
-    class="group flex h-full flex-col overflow-hidden rounded-2xl border border-(--ui-border) bg-elevated transition-[border-color,transform] duration-300 hover:border-(--ui-border-accented) hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+    class="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-(--ui-border) bg-elevated transition-[border-color,transform] duration-300 hover:border-(--ui-border-accented) hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
   >
+    <NuxtLink
+      :to="projectRoute(project.slug)"
+      :aria-labelledby="`project-${project.slug}`"
+      class="project-card-link absolute inset-0 z-10"
+    />
+
     <div class="project-card-media relative aspect-[16/10] overflow-hidden">
       <div aria-hidden="true" class="project-card-fallback absolute inset-0" />
       <span
@@ -23,10 +29,10 @@
       />
     </div>
 
-    <div class="flex flex-1 flex-col gap-3 p-5 sm:p-6">
+    <div class="relative flex flex-1 flex-col gap-3 p-5 sm:p-6">
       <h3
         :id="`project-${project.slug}`"
-        class="text-lg font-semibold tracking-tight text-(--ui-text-highlighted)"
+        class="text-lg font-semibold tracking-tight text-(--ui-text-highlighted) transition-colors duration-200 group-hover:text-(--ui-primary) motion-reduce:transition-none"
       >
         {{ project.name }}
       </h3>
@@ -41,17 +47,12 @@
         </li>
       </ul>
 
-      <div class="mt-auto flex flex-wrap gap-2 pt-2">
+      <div class="relative z-20 mt-auto flex flex-wrap gap-2 pt-2">
         <UButton
           v-for="link in project.links"
           :key="link.href"
           :to="link.href"
-          :external="isExternal(link.href)"
-          :target="isExternal(link.href) ? '_blank' : undefined"
-          :rel="isExternal(link.href) ? 'noopener noreferrer' : undefined"
-          :icon="linkIcons[link.type]"
-          :color="link.type === 'demo' ? 'primary' : 'neutral'"
-          :variant="linkVariants[link.type]"
+          v-bind="getProjectLinkProps(link)"
           size="sm"
         >
           {{ link.label }}
@@ -63,7 +64,8 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import type { Project, ProjectLink } from '~/types/project'
+import type { Project } from '~/types/project'
+import { getProjectLinkProps, projectRoute } from '~/composables/useProjectLinks'
 
 const props = defineProps<{ project: Project; priority?: boolean }>()
 
@@ -75,26 +77,14 @@ watch(
     imageFailed.value = false
   }
 )
-
-const linkIcons: Record<ProjectLink['type'], string> = {
-  repo: 'i-simple-icons-github',
-  demo: 'i-lucide-external-link',
-  package: 'i-lucide-package'
-}
-
-const linkVariants: Record<ProjectLink['type'], 'solid' | 'outline' | 'ghost'> =
-  {
-    repo: 'outline',
-    demo: 'solid',
-    package: 'ghost'
-  }
-
-function isExternal(href: string) {
-  return href.startsWith('http')
-}
 </script>
 
 <style scoped>
+.project-card-link:focus-visible {
+  outline: 2px solid var(--ui-primary);
+  outline-offset: -2px;
+}
+
 .project-card-media {
   background: linear-gradient(
     135deg,

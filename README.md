@@ -74,9 +74,11 @@ Adding a project is a three-step flow:
 
 The data is validated by a regression spec (`app/data/projects.spec.ts`) — a duplicate slug, empty `image`, malformed link URL, or a project with no links fails `pnpm test`.
 
+Every project in the registry also gets its own detail page at `/projects/<slug>` (e.g. `/projects/momgen`), prerendered at build time and linked from its card's image and title on the home page.
+
 ## Project structure
 
 - `app/data/*.ts` — typed source-of-truth data (`projects.ts`, `socials.ts`, experience and skills)
 - `app/components/` — Vue components for each section
-- `app/pages/` — routes (`index.vue`, `blog.vue`)
+- `app/pages/` — routes (`index.vue`, `blog.vue`, `projects/[slug].vue`)
 - `public/images/projects/` — project preview images
