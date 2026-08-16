@@ -6,7 +6,7 @@ export const projects: Project[] = [
     name: 'Momgen',
     description:
       'Turns meeting recordings (MP3/MP4) into structured Minutes-of-Meeting markdown. Transcribes with ElevenLabs Scribe, summarizes with an LLM, strips silence and caches segments to cut transcription cost, and estimates cost before running.',
-    image: '/images/projects/momgen.png',
+    image: '/images/projects/momgen.webp',
     imageAlt: 'Preview of the Momgen app',
     tags: ['TypeScript', 'Bun', 'AI SDK', 'FFmpeg', 'CLI', 'Next.js'],
     links: [
@@ -33,7 +33,7 @@ export const projects: Project[] = [
     name: 'Voxgen',
     description:
       'Turns a text or Markdown file into a narrated audio file using Fish Audio TTS. Normalizes Markdown for natural narration, chunks text on sentence/paragraph boundaries, caches requests, runs up to 4 calls in parallel, and outputs WAV/MP3/Opus/FLAC/M4A.',
-    image: '/images/projects/voxgen.png',
+    image: '/images/projects/voxgen.webp',
     imageAlt: 'Preview of the Voxgen app',
     tags: ['TypeScript', 'Bun', 'TTS', 'FFmpeg', 'CLI', 'Next.js'],
     links: [
