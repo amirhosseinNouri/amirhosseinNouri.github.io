@@ -11,7 +11,7 @@
    light primary surfaces to teal-700 so white-on-primary reaches ≈5:1.
    Dark mode keeps teal-400 (dark text on it passes), and accent *text*
    usages pin their own per-theme shades. */
-:root,
+:root:not(.dark),
 .light {
   --ui-primary: var(--ui-color-primary-700);
 }
