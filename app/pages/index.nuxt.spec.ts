@@ -13,6 +13,14 @@ describe('index page', () => {
     expect(ids).toEqual(['projects', 'about', 'experience', 'skills'])
   })
 
+  it('renders a single h1 (the hero name)', async () => {
+    const wrapper = await mountSuspended(IndexPage)
+
+    const headings = wrapper.findAll('h1')
+    expect(headings).toHaveLength(1)
+    expect(headings[0]!.text()).toBe('Amir Nouri')
+  })
+
   it('renders sections in the planned order: hero first, skills last', async () => {
     const wrapper = await mountSuspended(IndexPage)
 

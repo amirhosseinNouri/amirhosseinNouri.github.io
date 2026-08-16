@@ -10,6 +10,7 @@ useSeoMeta({
   <main
     class="flex min-h-[70vh] items-center justify-center px-4 py-24 sm:py-32"
   >
+    <h1 class="sr-only">Blog</h1>
     <UContainer class="flex justify-center">
       <UEmpty
         title="Coming soon"
