@@ -20,41 +20,10 @@ Merged from the original 51 atomic tickets — tickets that shipped the same del
 
 ### Open
 
+All required tickets are closed and the site is live. Only the two optional follow-ups remain open:
+
 | # | Title | Label | Dependencies |
 |---|---|---|---|
-| #1 | Scaffold Nuxt 4 app with pnpm, Node 22, and gitignore | infra | — |
-| #3 | Wire up CI gates: strict TS, ESLint, Vitest, Prettier | infra | #1 |
-| #7 | Install and register Nuxt UI v4 | infra | #1 |
-| #8 | Create base CSS and wrap root template in UApp | infra | #7 |
-| #10 | Define theme, type scale, and shared container width | infra | #7 |
-| #12 | Add dark mode toggle (system default, no flash) | infra | #10 |
-| #13 | Define Project type, registry, and regression spec | feature | #7 |
-| #16 | Build ProjectCard component | feature | #13, #7 |
-| #17 | Build ProjectsSection grid with component test | feature | #16 |
-| #18 | Capture preview images for momgen and voxgen | feature | #16 |
-| #20 | Build Hero section with resume PDF download | feature | #7 |
-| #21 | Build About section | feature | #7 |
-| #22 | Build Experience section and data | feature | #7 |
-| #23 | Build Skills section and data | feature | #7 |
-| #24 | Build SiteFooter with typed socials data | feature | #7 |
-| #26 | Assemble home page sections in order | feature | #17, #20, #21, #22, #23 |
-| #27 | Create shared default layout with SiteHeader | feature | #24, #12 |
-| #29 | Create blog placeholder page and verify prerendering | feature | #7 |
-| #31 | Configure global head and home SEO meta (verified in HTML) | feature | #26, #32 |
-| #32 | Create site OG image | feature | — (referenced by #31) |
-| #33 | Add sitemap and robots modules | feature | #31, #29 |
-| #34 | Add favicon set and web manifest | feature | #7 |
-| #35 | Add JSON-LD Person structured data | feature | #24, #26 |
-| #37 | Install and register nuxt-gtag | feature | #7 |
-| #38 | Configure GA4 measurement ID and dev guard | feature | #37 |
-| #39 | Add GA privacy note to footer | feature | #24 |
-| #40 | Verify GA tracking after deploy | feature | #38, #41 |
-| #41 | Add GitHub Pages CI/CD (deploy + PR CI + Pages source) | infra | #29 |
-| #44 | Lighthouse audit and fixes | feature | #41 |
-| #45 | Accessibility audit incl. prefers-reduced-motion | feature | #26, #29 |
-| #47 | Cross-browser and device check | feature | #41 |
-| #48 | Write README | feature | #13, #26 |
-| #49 | Style the 404 page | feature | #26, #7 |
 | #50 | Optional: blog posts via @nuxt/content | feature | #29 |
 | #51 | Optional: per-project detail routes | feature | #16 |
 
@@ -78,6 +47,16 @@ Merged from the original 51 atomic tickets — tickets that shipped the same del
 | #42 | Add PR CI workflow | #41 |
 | #43 | Configure Pages source to GitHub Actions | #41 |
 | #46 | Respect prefers-reduced-motion | #45 |
+
+### Closed (shipped as part of their PR)
+
+| # | Title | PR |
+|---|---|---|
+| #40 | Verify GA tracking after deploy | #84 (verification only) |
+| #44 | Lighthouse audit and fixes | #84 |
+| #45 | Accessibility audit incl. prefers-reduced-motion | #83 |
+| #47 | Cross-browser and device check | verification only |
+| #48 | Write README | #81 |
 
 ## Parallelism notes
 
