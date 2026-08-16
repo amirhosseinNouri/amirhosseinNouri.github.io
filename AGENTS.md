@@ -25,7 +25,8 @@ All required tickets are closed and the site is live. Only the two optional foll
 | # | Title | Label | Dependencies |
 |---|---|---|---|
 | #50 | Optional: blog posts via @nuxt/content | feature | #29 |
-| #51 | Optional: per-project detail routes | feature | #16 |
+
+#51 (per-project detail routes) was implemented and closed in PR #85.
 
 ### Closed (merged into a ticket above)
 
@@ -57,6 +58,7 @@ All required tickets are closed and the site is live. Only the two optional foll
 | #45 | Accessibility audit incl. prefers-reduced-motion | #83 |
 | #47 | Cross-browser and device check | verification only |
 | #48 | Write README | #81 |
+| #51 | Optional: per-project detail routes | #85 |
 
 ## Parallelism notes
 
