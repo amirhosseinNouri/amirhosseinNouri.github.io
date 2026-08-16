@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { projects } from '~/data/projects'
-import { isExternal, linkIcons, linkVariants } from '~/composables/useProjectLinks'
+import { getProjectLinkProps } from '~/composables/useProjectLinks'
 
 const route = useRoute()
 const siteConfig = useSiteConfig()
@@ -17,12 +17,12 @@ useSeoMeta({
     project.value?.description ?? 'This project could not be found on the site.',
   ogTitle: () => project.value?.name,
   ogDescription: () => project.value?.description,
-  ogType: 'article',
+  ogType: () => (project.value ? 'article' : 'website'),
   ogUrl: () =>
     project.value
       ? `${siteConfig.url}/projects/${project.value.slug}`
       : undefined,
-  ogImage: `${siteConfig.url}/og.png`
+  ogImage: () => (project.value ? `${siteConfig.url}/og.png` : undefined)
 })
 
 useHead(() => ({
@@ -111,12 +111,7 @@ useHead(() => ({
                 v-for="link in project.links"
                 :key="link.href"
                 :to="link.href"
-                :external="isExternal(link.href)"
-                :target="isExternal(link.href) ? '_blank' : undefined"
-                :rel="isExternal(link.href) ? 'noopener noreferrer' : undefined"
-                :icon="linkIcons[link.type]"
-                :color="link.type === 'demo' ? 'primary' : 'neutral'"
-                :variant="linkVariants[link.type]"
+                v-bind="getProjectLinkProps(link)"
                 size="md"
               >
                 {{ link.label }}

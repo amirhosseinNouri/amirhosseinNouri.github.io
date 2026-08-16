@@ -18,3 +18,24 @@ export const linkVariants: Record<
 export function isExternal(href: string) {
   return href.startsWith('http')
 }
+
+export type ProjectLinkButtonProps = {
+  icon: string
+  color: 'primary' | 'neutral'
+  variant: 'solid' | 'outline' | 'ghost'
+  external: boolean
+  target: '_blank' | undefined
+  rel: 'noopener noreferrer' | undefined
+}
+
+export function getProjectLinkProps(link: ProjectLink): ProjectLinkButtonProps {
+  const external = isExternal(link.href)
+  return {
+    icon: linkIcons[link.type],
+    color: link.type === 'demo' ? 'primary' : 'neutral',
+    variant: linkVariants[link.type],
+    external,
+    target: external ? '_blank' : undefined,
+    rel: external ? 'noopener noreferrer' : undefined
+  }
+}
