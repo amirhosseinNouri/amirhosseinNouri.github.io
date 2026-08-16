@@ -51,6 +51,19 @@ describe('ProjectCard', () => {
     )
   })
 
+  it('renders a link to the project detail page', async () => {
+    const project = projects.find((p) => p.slug === 'momgen')!
+    const wrapper = await mountSuspended(ProjectCard, { props: { project } })
+
+    const detailLinks = wrapper.findAll(`a[href="/projects/${project.slug}"]`)
+    expect(detailLinks.length).toBeGreaterThan(0)
+    expect(
+      wrapper
+        .find(`a[href="/projects/${project.slug}"]`)
+        .attributes('aria-label')
+    ).toBe(project.name)
+  })
+
   it('opens external links in a new tab with rel=noopener noreferrer', async () => {
     const project = projects[0]!
     const wrapper = await mountSuspended(ProjectCard, { props: { project } })

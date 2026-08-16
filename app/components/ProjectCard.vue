@@ -74,7 +74,8 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import type { Project, ProjectLink } from '~/types/project'
+import type { Project } from '~/types/project'
+import { isExternal, linkIcons, linkVariants } from '~/composables/useProjectLinks'
 
 const props = defineProps<{ project: Project; priority?: boolean }>()
 
@@ -86,23 +87,6 @@ watch(
     imageFailed.value = false
   }
 )
-
-const linkIcons: Record<ProjectLink['type'], string> = {
-  repo: 'i-simple-icons-github',
-  demo: 'i-lucide-external-link',
-  package: 'i-lucide-package'
-}
-
-const linkVariants: Record<ProjectLink['type'], 'solid' | 'outline' | 'ghost'> =
-  {
-    repo: 'outline',
-    demo: 'solid',
-    package: 'ghost'
-  }
-
-function isExternal(href: string) {
-  return href.startsWith('http')
-}
 </script>
 
 <style scoped>

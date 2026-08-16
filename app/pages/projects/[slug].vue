@@ -1,16 +1,15 @@
 <script setup lang="ts">
 import { projects } from '~/data/projects'
-import type { ProjectLink } from '~/types/project'
+import { isExternal, linkIcons, linkVariants } from '~/composables/useProjectLinks'
 
 const route = useRoute()
+const siteConfig = useSiteConfig()
 
 const slug = computed(() =>
   typeof route.params.slug === 'string' ? route.params.slug : ''
 )
 
 const project = computed(() => projects.find((p) => p.slug === slug.value))
-
-const siteUrl = 'https://amirhosseinnouri.github.io'
 
 useSeoMeta({
   title: () => project.value?.name ?? 'Project not found',
@@ -20,38 +19,22 @@ useSeoMeta({
   ogDescription: () => project.value?.description,
   ogType: 'article',
   ogUrl: () =>
-    project.value ? `${siteUrl}/projects/${project.value.slug}` : undefined,
-  ogImage: `${siteUrl}/og.png`
+    project.value
+      ? `${siteConfig.url}/projects/${project.value.slug}`
+      : undefined,
+  ogImage: `${siteConfig.url}/og.png`
 })
 
-useHead({
-  link: [
-    {
-      rel: 'canonical',
-      href: () =>
-        project.value
-          ? `${siteUrl}/projects/${project.value.slug}`
-          : `${siteUrl}/projects`
-    }
-  ]
-})
-
-const linkIcons: Record<ProjectLink['type'], string> = {
-  repo: 'i-simple-icons-github',
-  demo: 'i-lucide-external-link',
-  package: 'i-lucide-package'
-}
-
-const linkVariants: Record<ProjectLink['type'], 'solid' | 'outline' | 'ghost'> =
-  {
-    repo: 'outline',
-    demo: 'solid',
-    package: 'ghost'
-  }
-
-function isExternal(href: string) {
-  return href.startsWith('http')
-}
+useHead(() => ({
+  link: project.value
+    ? [
+        {
+          rel: 'canonical',
+          href: `${siteConfig.url}/projects/${project.value.slug}`
+        }
+      ]
+    : []
+}))
 </script>
 
 <template>
