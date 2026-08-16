@@ -16,7 +16,7 @@ useHead({
 </script>
 
 <template>
-  <div
+  <main
     class="relative isolate flex min-h-svh items-center justify-center overflow-hidden px-4 py-16"
   >
     <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
@@ -79,7 +79,7 @@ useHead({
         </div>
       </div>
     </UContainer>
-  </div>
+  </main>
 </template>
 
 <style scoped>
