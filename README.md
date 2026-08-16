@@ -18,7 +18,7 @@ pnpm install
 pnpm dev
 ```
 
-Open `http://localhost:3000`. A `pnpm prepare` hook runs automatically on install.
+Open `http://localhost:3000`. A `pnpm postinstall` hook runs automatically on install.
 
 ### Quality gates
 
@@ -57,6 +57,7 @@ Adding a project is a three-step flow:
      image: '/images/projects/my-project.png',      // path under public/
      imageAlt: 'Preview of the My Project app',
      tags: ['TypeScript', 'Next.js'],               // tech chips
+     featured: true,                                // optional; shown first in grid
      links: [
        { label: 'GitHub', href: 'https://github.com/...', type: 'repo' },
        { label: 'Live demo', href: 'https://...', type: 'demo' },
@@ -65,13 +66,13 @@ Adding a project is a three-step flow:
    }
    ```
 
-   `type` is one of `'repo' | 'demo' | 'package'` and a project may have any number of links — only the ones you list are rendered.
+   `type` is one of `'repo' | 'demo' | 'package'`. A project must have **at least one** link — only the ones you list are rendered.
 
 2. **Drop the preview image in `public/images/projects/`** as `<slug>.png`. Capture at **1280×800** (matching aspect ratio across all projects) and compress to under ~200 KB.
 
 3. **Commit and push.** CI runs the gates on your PR; merging to `main` triggers the deploy workflow that publishes to GitHub Pages.
 
-The data is validated by a regression spec (`app/data/projects.spec.ts`) — a duplicate slug, empty `image`, or malformed link URL fails `pnpm test`.
+The data is validated by a regression spec (`app/data/projects.spec.ts`) — a duplicate slug, empty `image`, malformed link URL, or a project with no links fails `pnpm test`.
 
 ## Project structure
 
