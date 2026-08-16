@@ -13,6 +13,11 @@ export default defineNuxtConfig({
   site: {
     url: 'https://amirhosseinnouri.github.io'
   },
+  nitro: {
+    prerender: {
+      routes: ['/projects/momgen', '/projects/voxgen']
+    }
+  },
   robots: {
     groups: [{ userAgent: '*', disallow: [] }]
   },
