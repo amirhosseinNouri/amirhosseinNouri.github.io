@@ -3,9 +3,9 @@
     class="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-(--ui-border) bg-elevated transition-[border-color,transform] duration-300 hover:border-(--ui-border-accented) hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
   >
     <NuxtLink
-      :to="`/projects/${project.slug}`"
+      :to="projectRoute(project.slug)"
       :aria-labelledby="`project-${project.slug}`"
-      class="project-card-link absolute inset-0 z-0"
+      class="project-card-link absolute inset-0 z-10"
     />
 
     <div class="project-card-media relative aspect-[16/10] overflow-hidden">
@@ -47,7 +47,7 @@
         </li>
       </ul>
 
-      <div class="relative z-10 mt-auto flex flex-wrap gap-2 pt-2">
+      <div class="relative z-20 mt-auto flex flex-wrap gap-2 pt-2">
         <UButton
           v-for="link in project.links"
           :key="link.href"
@@ -65,7 +65,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import type { Project } from '~/types/project'
-import { getProjectLinkProps } from '~/composables/useProjectLinks'
+import { getProjectLinkProps, projectRoute } from '~/composables/useProjectLinks'
 
 const props = defineProps<{ project: Project; priority?: boolean }>()
 
@@ -85,7 +85,6 @@ watch(
   outline-offset: -2px;
 }
 
-<style scoped>
 .project-card-media {
   background: linear-gradient(
     135deg,

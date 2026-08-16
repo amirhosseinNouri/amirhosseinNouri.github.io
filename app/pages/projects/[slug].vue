@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { projects } from '~/data/projects'
-import { getProjectLinkProps } from '~/composables/useProjectLinks'
+import { getProjectLinkProps, projectRoute } from '~/composables/useProjectLinks'
 
 const route = useRoute()
 const siteConfig = useSiteConfig()
@@ -11,6 +11,10 @@ const slug = computed(() =>
 
 const project = computed(() => projects.find((p) => p.slug === slug.value))
 
+if (!project.value) {
+  setResponseStatus(404)
+}
+
 useSeoMeta({
   title: () => project.value?.name ?? 'Project not found',
   description: () =>
@@ -20,7 +24,7 @@ useSeoMeta({
   ogType: () => (project.value ? 'article' : 'website'),
   ogUrl: () =>
     project.value
-      ? `${siteConfig.url}/projects/${project.value.slug}`
+      ? `${siteConfig.url}${projectRoute(project.value.slug)}`
       : undefined,
   ogImage: () => (project.value ? `${siteConfig.url}/og.png` : undefined)
 })
@@ -30,7 +34,7 @@ useHead(() => ({
     ? [
         {
           rel: 'canonical',
-          href: `${siteConfig.url}/projects/${project.value.slug}`
+          href: `${siteConfig.url}${projectRoute(project.value.slug)}`
         }
       ]
     : []

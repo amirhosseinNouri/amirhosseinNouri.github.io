@@ -4,8 +4,12 @@ import { projects } from '~/data/projects'
 import ProjectDetailPage from './[slug].vue'
 
 const { slugMock } = vi.hoisted(() => ({ slugMock: vi.fn(() => 'momgen') }))
+const { setResponseStatusMock } = vi.hoisted(() => ({
+  setResponseStatusMock: vi.fn()
+}))
 
 mockNuxtImport('useRoute', () => () => ({ params: { slug: slugMock() } }))
+mockNuxtImport('setResponseStatus', () => setResponseStatusMock)
 
 describe('project detail page', () => {
   it('renders a known project with a single h1, description, and its links', async () => {
@@ -29,8 +33,10 @@ describe('project detail page', () => {
 
   it('shows the not-found state with links home and to projects for an unknown slug', async () => {
     slugMock.mockReturnValue('nope')
+    setResponseStatusMock.mockClear()
     const wrapper = await mountSuspended(ProjectDetailPage)
 
+    expect(setResponseStatusMock).toHaveBeenCalledWith(404)
     expect(wrapper.text()).toContain('Project not found')
     expect(wrapper.findAll('h1')).toHaveLength(1)
     expect(wrapper.find('a[href="/"]').exists()).toBe(true)

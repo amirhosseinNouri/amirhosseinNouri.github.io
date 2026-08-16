@@ -15,6 +15,12 @@ export const linkVariants: Record<
   package: 'ghost'
 }
 
+export const projectsBase = '/projects'
+
+export function projectRoute(slug: string) {
+  return `${projectsBase}/${slug}`
+}
+
 export function isExternal(href: string) {
   return href.startsWith('http')
 }
