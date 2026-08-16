@@ -57,7 +57,7 @@ Adding a project is a three-step flow:
      image: '/images/projects/my-project.png',      // path under public/
      imageAlt: 'Preview of the My Project app',
      tags: ['TypeScript', 'Next.js'],               // tech chips
-      featured: true,                                // optional; reserved for future use (grid order follows array order)
+     featured: true,                                // optional; reserved for future use (grid order follows array order)
      links: [
        { label: 'GitHub', href: 'https://github.com/...', type: 'repo' },
        { label: 'Live demo', href: 'https://...', type: 'demo' },
