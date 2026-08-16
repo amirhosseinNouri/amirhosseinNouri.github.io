@@ -3,7 +3,16 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
-  modules: ['@nuxt/eslint', '@nuxt/ui', 'nuxt-gtag'],
+  modules: [
+    '@nuxt/eslint',
+    '@nuxt/ui',
+    'nuxt-gtag',
+    '@nuxtjs/sitemap',
+    '@nuxtjs/robots'
+  ],
+  site: {
+    url: 'https://amirhosseinnouri.github.io'
+  },
   gtag: {
     id: process.env.NUXT_PUBLIC_GTAG_ID || 'G-8NCFLTG53R',
     enabled: process.env.NODE_ENV === 'production'
@@ -27,7 +36,10 @@ export default defineNuxtConfig({
         },
         { property: 'og:type', content: 'website' },
         { property: 'og:site_name', content: 'Amir Nouri' },
-        { property: 'og:image', content: 'https://amirhosseinnouri.github.io/og.png' },
+        {
+          property: 'og:image',
+          content: 'https://amirhosseinnouri.github.io/og.png'
+        },
         { name: 'twitter:card', content: 'summary_large_image' }
       ]
     }
