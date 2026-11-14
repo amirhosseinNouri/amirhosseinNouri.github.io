@@ -9,6 +9,8 @@
 # - Secrets are stored as Vercel "sensitive" variables (write-only in the dashboard).
 # - Sensitive variables can't target `development`, so it is not a default target;
 #   local development reads `.env` directly.
+# - The database URL is not synced: the Vercel ↔ Neon integration
+#   (neon-copper-candle) injects DATABASE_URL into the project.
 # - Requires `vercel link` to have been run (creates .vercel/project.json).
 set -euo pipefail
 
@@ -21,7 +23,6 @@ VERCEL="${VERCEL_BIN:-npx -y vercel@latest}"
 KEYS=(
   "NUXT_PUBLIC_CLERK_PUBLISHABLE_KEY:config"
   "NUXT_CLERK_SECRET_KEY:secret"
-  "NUXT_DATABASE_URL:secret"
   "NUXT_ADMIN_EMAIL:config"
   "NUXT_SITE_URL:config"
 )

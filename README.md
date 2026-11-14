@@ -116,13 +116,13 @@ pnpm db:studio    # browse data
 ## Deploying (Vercel)
 
 1. Import the repo in Vercel. The framework preset is Nuxt, and the build command is `pnpm build`.
-2. Add the environment variables from `.env.example`:
+2. Connect the Neon store (`neon-copper-candle`) to the project under *Storage*. It injects `DATABASE_URL`, which the app reads when `NUXT_DATABASE_URL` is unset.
+3. Push the remaining variables from your local `.env` with `pnpm env:sync` (add `--dry-run` to preview):
    - `NUXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
    - `NUXT_CLERK_SECRET_KEY`
-   - `NUXT_DATABASE_URL`
    - `NUXT_ADMIN_EMAIL`
    - `NUXT_SITE_URL`
-3. In GitHub, set the repository variable `SITE_URL` to the Vercel/custom URL, then run the _Deploy GitHub Pages redirect_ workflow so old github.io links forward there.
+4. In GitHub, set the repository variable `SITE_URL` to the Vercel/custom URL, then run the _Deploy GitHub Pages redirect_ workflow so old github.io links forward there.
 
 ## Project structure
 
