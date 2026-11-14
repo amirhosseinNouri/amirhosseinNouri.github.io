@@ -67,7 +67,7 @@ jobs:
       - name: Test
         run: pnpm test
 
-  generate:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -85,5 +85,5 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Generate static site
-        run: pnpm generate
+      - name: Build
+        run: pnpm build

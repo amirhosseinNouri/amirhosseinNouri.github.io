@@ -17,7 +17,8 @@ describe('SiteHeader', () => {
     const links = wrapper.findAll('nav a[href]')
     const hrefs = links.map((link) => link.attributes('href'))
     expect(hrefs).toContain('/')
-    expect(hrefs).toContain('/blog')
+    expect(hrefs).toContain('/notes')
+    expect(hrefs).not.toContain('/blog')
   })
 
   it('marks the Home link as active on the home route', async () => {
@@ -25,40 +26,40 @@ describe('SiteHeader', () => {
     const wrapper = await mountSuspended(SiteHeader)
 
     const home = wrapper.find('nav a[href="/"]')
-    const blog = wrapper.find('nav a[href="/blog"]')
+    const notes = wrapper.find('nav a[href="/notes"]')
     expect(home.attributes('data-active')).toBe('true')
     expect(home.attributes('aria-current')).toBe('page')
-    expect(blog.attributes('data-active')).toBeUndefined()
-    expect(blog.attributes('aria-current')).toBeUndefined()
+    expect(notes.attributes('data-active')).toBeUndefined()
+    expect(notes.attributes('aria-current')).toBeUndefined()
   })
 
-  it('marks the Blog link as active on the blog route', async () => {
-    pathMock.mockReturnValue('/blog')
+  it('marks the Notes link as active on the notes route', async () => {
+    pathMock.mockReturnValue('/notes')
     const wrapper = await mountSuspended(SiteHeader)
 
     const home = wrapper.find('nav a[href="/"]')
-    const blog = wrapper.find('nav a[href="/blog"]')
-    expect(blog.attributes('data-active')).toBe('true')
-    expect(blog.attributes('aria-current')).toBe('page')
+    const notes = wrapper.find('nav a[href="/notes"]')
+    expect(notes.attributes('data-active')).toBe('true')
+    expect(notes.attributes('aria-current')).toBe('page')
     expect(home.attributes('data-active')).toBeUndefined()
     expect(home.attributes('aria-current')).toBeUndefined()
   })
 
-  it('does not mark the Blog link active on a sibling segment', async () => {
-    pathMock.mockReturnValue('/blogging')
+  it('does not mark the Notes link active on a sibling segment', async () => {
+    pathMock.mockReturnValue('/notesy')
     const wrapper = await mountSuspended(SiteHeader)
 
-    const blog = wrapper.find('nav a[href="/blog"]')
-    expect(blog.attributes('data-active')).toBeUndefined()
-    expect(blog.attributes('aria-current')).toBeUndefined()
+    const notes = wrapper.find('nav a[href="/notes"]')
+    expect(notes.attributes('data-active')).toBeUndefined()
+    expect(notes.attributes('aria-current')).toBeUndefined()
   })
 
-  it('marks the Blog link active on a nested blog route', async () => {
-    pathMock.mockReturnValue('/blog/post')
+  it('marks the Notes link active on a nested notes route', async () => {
+    pathMock.mockReturnValue('/notes/post')
     const wrapper = await mountSuspended(SiteHeader)
 
-    const blog = wrapper.find('nav a[href="/blog"]')
-    expect(blog.attributes('data-active')).toBe('true')
-    expect(blog.attributes('aria-current')).toBe('page')
+    const notes = wrapper.find('nav a[href="/notes"]')
+    expect(notes.attributes('data-active')).toBe('true')
+    expect(notes.attributes('aria-current')).toBe('page')
   })
 })

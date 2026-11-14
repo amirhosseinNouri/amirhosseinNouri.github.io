@@ -10,3 +10,4 @@ AGENTS.md
 plan.md
 agents/
 .agents/
+server/db/migrations
