@@ -67,7 +67,7 @@ jobs:
       - name: Test
         run: pnpm test
 
-  generate:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -85,5 +85,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Generate static site
-        run: pnpm generate
+      - name: Build
+        run: pnpm build
+        env:
+          # Prerendering runs Clerk's server middleware, which only needs
+          # well-formed keys (no API calls for anonymous requests). These are
+          # placeholders; real keys live in Vercel.
+          NUXT_PUBLIC_CLERK_PUBLISHABLE_KEY: pk_test_ZXhhbXBsZS5jbGVyay5hY2NvdW50cy5kZXYk
+          NUXT_CLERK_SECRET_KEY: sk_test_ci_placeholder

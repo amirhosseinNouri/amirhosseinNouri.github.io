@@ -24,7 +24,7 @@ All required tickets are closed and the site is live. Only the two optional foll
 
 | # | Title | Label | Dependencies |
 |---|---|---|---|
-| #50 | Optional: blog posts via @nuxt/content | feature | #29 |
+| #50 | Optional: blog posts via @nuxt/content | feature | #29 — superseded by the DB-backed Notes section; close when merged |
 
 #51 (per-project detail routes) was implemented and closed in PR #85.
 
@@ -71,6 +71,7 @@ All required tickets are closed and the site is live. Only the two optional foll
 ## Working conventions
 
 - Package manager: **pnpm**, Node 22.
-- Gates that must pass before a PR is mergeable: `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm generate`.
-- Static output ships via GitHub Pages Actions workflow; `.nojekyll` is mandatory (see #41).
+- Gates that must pass before a PR is mergeable: `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build`.
+- The site deploys to **Vercel** (hybrid Nuxt: prerendered home/projects, ISR notes, SPA admin). GitHub Pages only serves a redirect stub (`.github/workflows/deploy.yml`).
+- Notes live in Neon (`server/db/schema.ts`); admin auth is Clerk + `requireAdmin` (verified email must equal `NUXT_ADMIN_EMAIL`). Secrets go in `.env` (gitignored), never in commits.
 - Keep the two source-of-truth data files in sync with the UI: `app/data/projects.ts` and `app/data/socials.ts`.

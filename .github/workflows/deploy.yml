@@ -1,8 +1,15 @@
-name: Deploy to GitHub Pages
+name: Deploy GitHub Pages redirect
+
+# The site now runs on Vercel (it needs a server for the notes admin).
+# GitHub Pages only serves a tiny stub that forwards old
+# amirhosseinnouri.github.io links — path, query and hash included — to the
+# new origin. Set the `SITE_URL` repository variable to the Vercel/custom URL.
 
 on:
   push:
     branches: [main]
+    paths:
+      - .github/workflows/deploy.yml
   workflow_dispatch:
 
 permissions:
@@ -14,39 +21,39 @@ concurrency:
   group: pages
   cancel-in-progress: false
 
+env:
+  SITE_URL: ${{ vars.SITE_URL || 'https://amirhosseinnouri.vercel.app' }}
+
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Lint
-        run: pnpm lint
-
-      - name: Typecheck
-        run: pnpm typecheck
-
-      - name: Test
-        run: pnpm test
-
-      - name: Generate static site
-        run: pnpm generate
-
-      - name: Disable Jekyll on GitHub Pages
-        run: touch .output/public/.nojekyll
+      - name: Build redirect stub
+        run: |
+          mkdir -p stub
+          cat > stub/index.html <<HTML
+          <!doctype html>
+          <html lang="en">
+            <head>
+              <meta charset="utf-8" />
+              <title>Amir Nouri — moved</title>
+              <meta name="robots" content="noindex" />
+              <link rel="canonical" href="${SITE_URL}/" />
+              <meta http-equiv="refresh" content="0; url=${SITE_URL}/" />
+              <script>
+                location.replace('${SITE_URL}' + location.pathname + location.search + location.hash)
+              </script>
+            </head>
+            <body>
+              <p>This site has moved to <a href="${SITE_URL}/">${SITE_URL}</a>.</p>
+            </body>
+          </html>
+          HTML
+          cp stub/index.html stub/404.html
+          touch stub/.nojekyll
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
@@ -54,7 +61,8 @@ jobs:
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .output/public
+          path: stub
 
       - name: Deploy to Pages
+        id: deployment
         uses: actions/deploy-pages@v4
